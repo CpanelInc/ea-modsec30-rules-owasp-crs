@@ -1,3 +1,5 @@
-# TODO:
-1. popluate SOURCES/
-2. either add relevant content here or remove this file
+# SOURCES/
+
+This package currently gets its files from `ea-modsec2-rules-owasp-crs` since those rules currently work w/ 2.9 and 3.x.
+
+Bumping the version here will be part of \`ea-modsec2-rules-owasp-crs\`’s update process. See its UPDATING.md for details.
