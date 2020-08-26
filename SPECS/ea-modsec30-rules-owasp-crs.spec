@@ -33,6 +33,7 @@ mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 /bin/cp -rf /etc/apache2/conf.d/modsec_vendor_configs/OWASP3/* $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 mkdir -p $RPM_BUILD_ROOT/var/cpanel/modsec_vendors
 /bin/cp -f $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
+perl -pi -e 's/ea-modsec2-rules-owasp-crs/ea-modsec30-rules-owasp-crs/' $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 # NGINX
 mkdir -p $RPM_BUILD_ROOT/etc/nginx/conf.d/modsec_vendor_configs
