@@ -11,6 +11,7 @@ URL: https://github.com/coreruleset/coreruleset
 
 # This provides the source we want. See markdown fiel in SOURCES/ for details
 BuildRequires: ea-modsec2-rules-owasp-crs
+Requires: ea-modsec30
 
 Provides: ea-modsec-rules-owasp-crs
 Conflicts: ea-modsec-rules-owasp-crs
