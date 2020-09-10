@@ -2,7 +2,7 @@ Name: ea-modsec30-rules-owasp-crs
 Summary: OWASP ModSecurity Core Rule Set (CRS) for Mod Sec 3.0
 Version: 3.3.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 Vendor: cPanel, Inc.
 Group: System Environment/Libraries
@@ -35,6 +35,7 @@ mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 mkdir -p $RPM_BUILD_ROOT/var/cpanel/modsec_vendors
 /bin/cp -f $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
 perl -pi -e 's/ea-modsec2-rules-owasp-crs/ea-modsec30-rules-owasp-crs/' $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
+perl -pi -e 's/2\.9/3.0/g' $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 # NGINX
 mkdir -p $RPM_BUILD_ROOT/etc/nginx/conf.d/modsec_vendor_configs
@@ -169,5 +170,8 @@ fi
 /var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 %changelog
+* Thu Sep 10 2020 Daniel Muey <dan@cpanel.net> - 3.3.0-2
+- ZC-7524: update UI name and description to be 3.0
+
 * Wed Aug 26 2020 Dan Muey <dan@cpanel.net> - 3.0.2-1
 - ZC-5715: initial release
