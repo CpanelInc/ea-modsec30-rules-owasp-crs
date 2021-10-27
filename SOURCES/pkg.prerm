@@ -68,4 +68,7 @@ EOT
     /bin/rm -f $update_name
 fi
 
+if [ -x "/usr/bin/apt" ]; then
+    /bin/rm -rf /etc/nginx/conf.d/modsec_vendor_configs/OWASP3
+fi
 
