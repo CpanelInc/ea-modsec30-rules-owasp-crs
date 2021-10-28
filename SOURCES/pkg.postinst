@@ -23,16 +23,6 @@ if [ "${_localstatedir}" = "" ]; then
     release="%{release}"
 fi
 
-if [ -x "/usr/bin/apt" ]; then
-    if [ -d "/etc/nginx/conf.d/modsec_vendor_configs/OWASP3" ]; then
-        # this directory being present from the install is empty and prevents
-        # the symlink command
-        /bin/rm -rf /etc/nginx/conf.d/modsec_vendor_configs/OWASP3
-    fi
-
-    ln -s /opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3 /etc/nginx/conf.d/modsec_vendor_configs
-fi
-
 /usr/local/cpanel/3rdparty/bin/perl -MCpanel::CachedDataStore -e \
   'my $hr=Cpanel::CachedDataStore::loaddatastore($ARGV[0]);$hr->{data}{OWASP3} = { distribution => "ea-modsec30-rules-owasp-crs", url => "N/A, it is done via RPM"};Cpanel::CachedDataStore::savedatastore($ARGV[0], { data => $hr->{data} })' \
   /var/cpanel/modsec_vendors/installed_from.yaml
