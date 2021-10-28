@@ -11,5 +11,8 @@
     "remove_from_install": [
         "\\.pyc$",
         "\\.pyo$"
+    ],
+    "adjust_install_file_src": [
+        [ "^\\./OWASP3", "./etc/nginx/conf.d/modsec_vendor_configs/OWASP3" ]
     ]
 }

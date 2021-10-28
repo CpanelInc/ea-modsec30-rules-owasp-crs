@@ -14,7 +14,8 @@ perl -pi -e 's/ea-modsec2-rules-owasp-crs/ea-modsec30-rules-owasp-crs/' $DEB_INS
 perl -pi -e 's/2\.9/3.0/g' $DEB_INSTALL_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
 # NGINX
 mkdir -p $DEB_INSTALL_ROOT/etc/nginx/conf.d/modsec_vendor_configs
-ln -s  /opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3 $DEB_INSTALL_ROOT/etc/nginx/conf.d/modsec_vendor_configs/OWASP3
+ln -s /opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3 $DEB_INSTALL_ROOT/etc/nginx/conf.d/modsec_vendor_configs/OWASP3
+
 # Apache
 # The WHM system will not follow a symlink and you cannot hardlink directories so we keep a duplicate copy :(
 mkdir -p $DEB_INSTALL_ROOT/etc/apache2/conf.d/modsec_vendor_configs/OWASP3
