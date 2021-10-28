@@ -24,8 +24,13 @@ if [ "${_localstatedir}" = "" ]; then
 fi
 
 if [ -x "/usr/bin/apt" ]; then
-    mkdir -p /etc/nginx/conf.d/modsec_vendor_configs/OWASP3
-    /bin/cp -rf /opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3/* /etc/apache2/conf.d/modsec_vendor_configs/OWASP3
+    if [ -d "/etc/nginx/conf.d/modsec_vendor_configs/OWASP3" ]; then
+        # this directory being present from the install is empty and prevents
+        # the symlink command
+        /bin/rm -rf /etc/nginx/conf.d/modsec_vendor_configs/OWASP3
+    fi
+
+    ln -s /opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3 /etc/nginx/conf.d/modsec_vendor_configs
 fi
 
 /usr/local/cpanel/3rdparty/bin/perl -MCpanel::CachedDataStore -e \
