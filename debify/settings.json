@@ -1,0 +1,18 @@
+{
+    "dont_override_config": 1,
+    "add_to_requires": {
+        "ea-modsec30-rules-owasp-crs": [
+            "lua5.3"
+        ]
+    },
+    "add_to_build_requires": [
+        "lua5.3"
+    ],
+    "remove_from_install": [
+        "\\.pyc$",
+        "\\.pyo$"
+    ],
+    "adjust_install_file_src": [
+        [ "^\\./OWASP3", "./etc/nginx/conf.d/modsec_vendor_configs/OWASP3" ]
+    ]
+}
