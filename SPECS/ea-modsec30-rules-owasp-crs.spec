@@ -2,7 +2,7 @@ Name: ea-modsec30-rules-owasp-crs
 Summary: OWASP ModSecurity Core Rule Set (CRS) for Mod Sec 3.0
 Version: 3.3.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 5
+%define release_prefix 6
 Release: %{release_prefix}%{?dist}.cpanel
 Vendor: cPanel, Inc.
 Group: System Environment/Libraries
@@ -37,9 +37,9 @@ mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 /bin/cp -f /opt/cpanel/ea-modsec2-rules-owasp-crs/* $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/
 /bin/cp -rf /etc/apache2/conf.d/modsec_vendor_configs/OWASP3/* $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 mkdir -p $RPM_BUILD_ROOT/var/cpanel/modsec_vendors
+perl -pi -e 's/ea-modsec2-rules-owasp-crs/ea-modsec30-rules-owasp-crs/' $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml
+perl -pi -e 's/2\.9/3.0/g' $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml
 /bin/cp -f $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
-perl -pi -e 's/ea-modsec2-rules-owasp-crs/ea-modsec30-rules-owasp-crs/' $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
-perl -pi -e 's/2\.9/3.0/g' $RPM_BUILD_ROOT/var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 # NGINX
 mkdir -p $RPM_BUILD_ROOT/etc/nginx/conf.d/modsec_vendor_configs
@@ -64,6 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %posttrans
 
+# RPM needs this (see ZC-7633 for details), already happening for deb via %{SOURCE4}
 PERL=/usr/local/cpanel/3rdparty/bin/perl
 $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::ModsecCpanelConf->new->manipulate(sub {})'
 
@@ -75,6 +76,9 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 /var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 %changelog
+* Wed Nov 03 2021 Daniel Muey <dan@cpanel.net> - 3.3.0-6
+- ZC-9450: correct version in YAML file
+
 * Tue Apr 13 2021 Daniel Muey <dan@cpanel.net> - 3.3.0-5
 - ZC-8756: Update for upstream ULC changes
 

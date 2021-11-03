@@ -1,4 +1,5 @@
 {
+    "dont_relativise_ontar": 1,
     "dont_override_config": 1,
     "add_to_requires": {
         "ea-modsec30-rules-owasp-crs": [
