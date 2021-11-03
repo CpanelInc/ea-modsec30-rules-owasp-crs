@@ -21,21 +21,3 @@ ln -s /opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3 $DEB_INSTALL_ROOT/etc/nginx
 # The WHM system will not follow a symlink and you cannot hardlink directories so we keep a duplicate copy :(
 mkdir -p $DEB_INSTALL_ROOT/etc/apache2/conf.d/modsec_vendor_configs/OWASP3
 /bin/cp -rf $DEB_INSTALL_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3/* $DEB_INSTALL_ROOT/etc/apache2/conf.d/modsec_vendor_configs/OWASP3
-
-find /etc/apache2/conf.d/modsec_vendor_configs/OWASP3 -type f -print > files.txt
-find /opt/cpanel/ea-modsec2-rules-owasp-crs -type f -print >> files.txt
-find /usr/share/doc/ea-modsec2-rules-owasp-crs -type f -print >> files.txt
-find /var/cpanel/modsec_vendors -type f -print >> files.txt
-
-for file in `cat files.txt`
-do
-    /bin/cp $file .
-done
-
-mkdir OWASP-CRS-Documentation
-mkdir OWASP3
-
-echo "FILELIST"
-cat files.txt
-ls -ld * || /bin/true
-
