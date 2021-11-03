@@ -2,7 +2,7 @@ Name: ea-modsec30-rules-owasp-crs
 Summary: OWASP ModSecurity Core Rule Set (CRS) for Mod Sec 3.0
 Version: 3.3.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 6
+%define release_prefix 7
 Release: %{release_prefix}%{?dist}.cpanel
 Vendor: cPanel, Inc.
 Group: System Environment/Libraries
@@ -76,6 +76,9 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 /var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 %changelog
+* Wed Nov 03 2021 Travis Holloway <t.holloway@cpanel.net> - 3.3.0-7
+- EA-10240: Update verbiage to be OS neutral
+
 * Wed Nov 03 2021 Daniel Muey <dan@cpanel.net> - 3.3.0-6
 - ZC-9450: correct version in YAML file
 
