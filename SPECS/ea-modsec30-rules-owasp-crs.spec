@@ -64,6 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %posttrans
 
+# RPM needs this (see ZC-7633 for details), already happening for deb via %{SOURCE4}
 PERL=/usr/local/cpanel/3rdparty/bin/perl
 $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::ModsecCpanelConf->new->manipulate(sub {})'
 
