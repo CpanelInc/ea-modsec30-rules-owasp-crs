@@ -22,6 +22,12 @@ if [ "${_localstatedir}" = "" ]; then
     release="%{release}"
 fi
 
+# This fixes a potential race condition when installing the rules and
+# connector at the same time
+
+mkdir -p /etc/apache2/conf.d/modsec
+touch /etc/apache2/conf.d/modsec/modsec2.cpanel.conf
+
 if [ "$1" = "install" ] || [ "$1" = "1" ] ; then
     if [ -e "${_localstatedir}/lib/rpm-state/ea-modsec30-rules-owasp-crs/had_old" ] ; then
         unlink ${_localstatedir}/lib/rpm-state/ea-modsec30-rules-owasp-crs/had_old
