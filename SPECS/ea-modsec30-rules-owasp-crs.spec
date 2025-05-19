@@ -1,6 +1,6 @@
 Name: ea-modsec30-rules-owasp-crs
 Summary: OWASP ModSecurity Core Rule Set (CRS) for Mod Sec 3.0
-Version: 3.3.4
+Version: 3.3.7
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
@@ -76,6 +76,9 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 /var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 %changelog
+* Mon May 19 2025 Dan Muey <daniel.muey@webpros.com> - 3.3.7-1
+- ZC-12842: Bump verison to match upstream
+
 * Tue Nov 29 2022 Travis Holloway <t.holloway@cpanel.net> - 3.3.4-1
 - EA-10944: Bump verison to match upstream
 
