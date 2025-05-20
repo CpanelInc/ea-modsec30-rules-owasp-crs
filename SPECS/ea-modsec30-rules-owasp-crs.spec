@@ -77,13 +77,13 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 
 %changelog
 * Mon May 19 2025 Dan Muey <daniel.muey@webpros.com> - 3.3.7-1
-- ZC-12842: Bump verison to match upstream
+- ZC-12842: Bump version to match upstream
 
 * Tue Nov 29 2022 Travis Holloway <t.holloway@cpanel.net> - 3.3.4-1
-- EA-10944: Bump verison to match upstream
+- EA-10944: Bump version to match upstream
 
 * Wed Mar 16 2022 Travis Holloway <t.holloway@cpanel.net> - 3.3.2-1
-- EA-10394: Bump verison to match upstream
+- EA-10394: Bump version to match upstream
 
 * Wed Dec 29 2021 Dan Muey <dan@cpanel.net> - 3.3.0-9
 - ZC-9573: Correct an order of operations installation issue on CentOS
