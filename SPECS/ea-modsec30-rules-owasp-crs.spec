@@ -77,7 +77,7 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 
 %changelog
 * Tue May 27 2025 Julian Brown <julian.brown@webpros.com> - 3.3.7-2
-- ZC-12871: Bump version to match upstream
+- ZC-12871: Correct the meta data
 
 * Mon May 19 2025 Dan Muey <daniel.muey@webpros.com> - 3.3.7-1
 - ZC-12842: Bump version to match upstream
