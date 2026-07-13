@@ -1,4 +1,4 @@
-#!/usr/local/cpanel/3rdparty/bin/perl
+#!/usr/bin/perl
 
 # EA-13496: rule 901181 (new in upstream CRS v3.3.10) uses
 # `ctl:ruleRemoveTargetByTag=<tag>;XML://@*`, which fails to parse on this

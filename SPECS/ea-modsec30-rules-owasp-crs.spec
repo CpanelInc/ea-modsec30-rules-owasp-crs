@@ -16,6 +16,8 @@ URL: https://github.com/coreruleset/coreruleset
 # was corrected to match, even though a rebuild in that window would have
 # picked up the newer (unlabeled) content via this unpinned BuildRequires.
 BuildRequires: ea-modsec2-rules-owasp-crs >= 3.3.10
+# EA-13496: %install runs disable-rule-901181.pl under the build chroot's perl
+BuildRequires: perl
 Requires: ea-modsec30
 
 Provides: ea-modsec-rules-owasp-crs
@@ -53,7 +55,10 @@ mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 # EA-13496: disable rule 901181 in this package's own copy only - see
 # SOURCES/disable-rule-901181.pl for why, and why the core
 # ea-modsec2-rules-owasp-crs package is untouched.
-/usr/local/cpanel/3rdparty/bin/perl %{SOURCE6} \
+# Build-time transform: use the build chroot's system perl, NOT cPanel's
+# /usr/local/cpanel/3rdparty perl (which does not exist in the OBS chroot).
+# The script is pure core perl (no cPanel modules), so system perl is fine.
+/usr/bin/perl %{SOURCE6} \
     $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3/rules/REQUEST-901-INITIALIZATION.conf
 
 mkdir -p $RPM_BUILD_ROOT/var/cpanel/modsec_vendors
