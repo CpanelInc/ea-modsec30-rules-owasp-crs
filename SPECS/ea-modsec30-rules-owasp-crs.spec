@@ -1,8 +1,8 @@
 Name: ea-modsec30-rules-owasp-crs
 Summary: OWASP ModSecurity Core Rule Set (CRS) for Mod Sec 3.0
-Version: 3.3.9
+Version: 3.3.10
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 Vendor: cPanel, Inc.
 Group: System Environment/Libraries
@@ -10,7 +10,12 @@ License: Apache v2
 URL: https://github.com/coreruleset/coreruleset
 
 # This provides the source we want. See markdown fiel in SOURCES/ for details
-BuildRequires: ea-modsec2-rules-owasp-crs
+# EA-13496: pinned so this package's own Version: label cannot silently drift
+# out of sync with the content it actually ships again - ea-modsec2-rules-owasp-crs
+# bumped to 3.3.10 (EA-13481) three weeks before this package's Version: field
+# was corrected to match, even though a rebuild in that window would have
+# picked up the newer (unlabeled) content via this unpinned BuildRequires.
+BuildRequires: ea-modsec2-rules-owasp-crs >= 3.3.10
 Requires: ea-modsec30
 
 Provides: ea-modsec-rules-owasp-crs
@@ -76,6 +81,9 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 /var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 %changelog
+* Mon Jul 13 2026 Cory McIntire <cory.mcintire@webpros.com> - 3.3.10-1
+- EA-13496: Correct Version label to 3.3.10 to match the CRS content actually being shipped (SecComponentSignature already reported OWASP_CRS/3.3.10 on the currently-published 3.3.9-labeled package); pin BuildRequires to ea-modsec2-rules-owasp-crs >= 3.3.10 so the two packages' declared versions cannot silently drift apart again
+
 * Tue Mar 31 2026 Cory McIntire <cory.mcintire@webpros.com> - 3.3.9-1
 - EA-13393: Bump version to match upstream
 
