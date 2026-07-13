@@ -16,7 +16,7 @@ URL: https://github.com/coreruleset/coreruleset
 # was corrected to match, even though a rebuild in that window would have
 # picked up the newer (unlabeled) content via this unpinned BuildRequires.
 BuildRequires: ea-modsec2-rules-owasp-crs >= 3.3.10
-# EA-13496: %install runs disable-rule-901181.pl under the build chroot's perl
+# EA-13496: the install section runs disable-rule-901181.pl under the build chroot's perl
 BuildRequires: perl
 Requires: ea-modsec30
 
