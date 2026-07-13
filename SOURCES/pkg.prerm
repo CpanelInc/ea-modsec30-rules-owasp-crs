@@ -16,6 +16,23 @@ if [ "$1" = "remove" ] || [ "$1" = "0" ] ; then
     echo "Removing OWASP3 config"
     PERL=/usr/local/cpanel/3rdparty/bin/perl
 
+    # When included into the spec file, the spec file cannot access the `${` vars
+    # as they are.
+    if [ "${_localstatedir}" = "" ]; then
+        _localstatedir="%{_localstatedir}"
+    fi
+
+    # A genuine removal must not leave rpm-state behind. pkg.preinst's %pre uses
+    # the presence of "had_old"/leftover OWASP3 content as its signal that this
+    # install is layering over a pre-existing (incompatible) vendor install, and
+    # pkg.postinst's %post skips the auto-enable of OWASP3 whenever had_old
+    # exists. If this uninstall leaves any of that state on disk, the *next*
+    # install of this package (e.g. a customer doing `yum remove` then later
+    # `yum install` to bring CRS back) is misread as "upgrade over stale vendor
+    # content" and silently skips auto-enabling OWASP3 - see EA-13492 smold4r
+    # investigation, reproduced as `active_vendors: {}` after a reinstall.
+    rm -rf "${_localstatedir}/lib/rpm-state/ea-modsec30-rules-owasp-crs"
+
     # We can't `/usr/local/cpanel/scripts/modsec_vendor remove OWASP3`
     #   because it also removes the PKG owned files creating many warnings later
     #   so we emulate the bits we need
