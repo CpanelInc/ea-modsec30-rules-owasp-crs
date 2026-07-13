@@ -2,7 +2,7 @@ Name: ea-modsec30-rules-owasp-crs
 Summary: OWASP ModSecurity Core Rule Set (CRS) for Mod Sec 3.0
 Version: 3.3.10
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 Vendor: cPanel, Inc.
 Group: System Environment/Libraries
@@ -25,6 +25,14 @@ Source3: pkg.prerm
 Source4: pkg.postinst
 Source5: pkg.preinst
 
+# EA-13496: disables CRS rule 901181 in THIS package's own copy of the
+# ruleset only - confirmed scoped to this package (libmodsecurity 3.0.15 +
+# beta Apache connector), NOT the shared ea-modsec2-rules-owasp-crs core
+# package, which ships and correctly runs this same rule unmodified. See
+# the script itself and work/handoffs/EA-13492-modsec-rules-investigation.md
+# for the full live-tested evidence on both stacks.
+Source6: disable-rule-901181.pl
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 AutoReq:   no
 
@@ -41,6 +49,13 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
 /bin/cp -f /opt/cpanel/ea-modsec2-rules-owasp-crs/* $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/
 /bin/cp -rf /etc/apache2/conf.d/modsec_vendor_configs/OWASP3/* $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3
+
+# EA-13496: disable rule 901181 in this package's own copy only - see
+# SOURCES/disable-rule-901181.pl for why, and why the core
+# ea-modsec2-rules-owasp-crs package is untouched.
+/usr/local/cpanel/3rdparty/bin/perl %{SOURCE6} \
+    $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/OWASP3/rules/REQUEST-901-INITIALIZATION.conf
+
 mkdir -p $RPM_BUILD_ROOT/var/cpanel/modsec_vendors
 perl -pi -e 's/ea-modsec2-rules-owasp-crs/ea-modsec30-rules-owasp-crs/' $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml
 perl -pi -e 's/2\.9/3.0/g' $RPM_BUILD_ROOT/opt/cpanel/ea-modsec30-rules-owasp-crs/meta_OWASP3.yaml
@@ -81,6 +96,9 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 /var/cpanel/modsec_vendors/meta_OWASP3.yaml
 
 %changelog
+* Mon Jul 13 2026 Cory McIntire <cory.mcintire@webpros.com> - 3.3.10-2
+- EA-13496: Disable CRS rule 901181 in this package's own %install copy only (SOURCES/disable-rule-901181.pl) - confirmed scoped to this package's libmodsecurity 3.0.15/beta Apache connector combo, NOT the core ea-modsec2-rules-owasp-crs package, which correctly runs this rule unmodified (live-tested on both stacks)
+
 * Mon Jul 13 2026 Cory McIntire <cory.mcintire@webpros.com> - 3.3.10-1
 - EA-13496: Correct Version label to 3.3.10 to match the CRS content actually being shipped (SecComponentSignature already reported OWASP_CRS/3.3.10 on the currently-published 3.3.9-labeled package); pin BuildRequires to ea-modsec2-rules-owasp-crs >= 3.3.10 so the two packages' declared versions cannot silently drift apart again
 
