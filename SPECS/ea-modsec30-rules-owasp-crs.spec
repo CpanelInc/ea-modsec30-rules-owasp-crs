@@ -97,7 +97,7 @@ $PERL -MWhostmgr::ModSecurity::ModsecCpanelConf -e 'Whostmgr::ModSecurity::Modse
 
 %changelog
 * Mon Jul 13 2026 Cory McIntire <cory.mcintire@webpros.com> - 3.3.10-2
-- EA-13496: Disable CRS rule 901181 in this package's own %install copy only (SOURCES/disable-rule-901181.pl) - confirmed scoped to this package's libmodsecurity 3.0.15/beta Apache connector combo, NOT the core ea-modsec2-rules-owasp-crs package, which correctly runs this rule unmodified (live-tested on both stacks)
+- EA-13496: Disable CRS rule 901181 in this package's own build-time copy only (SOURCES/disable-rule-901181.pl) - confirmed scoped to this package's libmodsecurity 3.0.15/beta Apache connector combo, NOT the core ea-modsec2-rules-owasp-crs package, which correctly runs this rule unmodified (live-tested on both stacks)
 
 * Mon Jul 13 2026 Cory McIntire <cory.mcintire@webpros.com> - 3.3.10-1
 - EA-13496: Correct Version label to 3.3.10 to match the CRS content actually being shipped (SecComponentSignature already reported OWASP_CRS/3.3.10 on the currently-published 3.3.9-labeled package); pin BuildRequires to ea-modsec2-rules-owasp-crs >= 3.3.10 so the two packages' declared versions cannot silently drift apart again
